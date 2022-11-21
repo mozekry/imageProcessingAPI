@@ -1,0 +1,29 @@
+{
+  "name": "imageProcessingAPI",
+  "version": "1.0.0",
+  "description": "\"# imageProcessingAPI\"",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozekry/imageProcessingAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mozekry/imageProcessingAPI/issues"
+  },
+  "homepage": "https://github.com/mozekry/imageProcessingAPI#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
