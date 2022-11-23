@@ -44,12 +44,22 @@ app.get('/api/imageresize', async (req, res) => {
             .stat(`assets/images/${imagename}.jpg`)
             .catch(() => false);
         if (isOriginalFileExist) {
-            await sharp(`assets/images/${imagename}.jpg`)
-                .resize(width, height)
-                .toFile(imagesResizedLocation);
-            res.sendFile(imagesResizedLocation);
+            try {
+                await sharp(`assets/images/${imagename}.jpg`)
+                    .resize(width, height)
+                    .toFile(imagesResizedLocation);
+                res.sendFile(imagesResizedLocation);
+            } catch (error: unknown) {
+                res.status(400);
+                res.send(
+                    `<h3 style="color: red">Can't process the image</h3> <br/> <p>${error}</p>`
+                );
+            }
         } else {
+            res.status(404);
             res.send(`<h3 style="color: red">File doesn't exist</h3>`);
         }
     }
 });
+
+export default app;
