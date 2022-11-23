@@ -1,7 +1,7 @@
 import express from 'express';
 import fspromises from 'fs/promises';
 import path from 'path';
-import sharp from 'sharp';
+import processingImage from './services/imageservice';
 
 const app = express();
 const port = 3000;
@@ -13,7 +13,7 @@ app.listen(port, () => {
 
 app.use(express.static('assets'));
 
-app.get('/api/imageresize', async (req, res) => {
+app.get('/api/imageresize', async (req, res): Promise<void> => {
     const imagename: string =
         req.query.imagename == undefined ? '' : req.query.imagename.toString();
     const width: number =
@@ -45,10 +45,12 @@ app.get('/api/imageresize', async (req, res) => {
             .catch(() => false);
         if (isOriginalFileExist) {
             try {
-                await sharp(`assets/images/${imagename}.jpg`)
-                    .resize(width, height)
-                    .toFile(imagesResizedLocation);
-                res.sendFile(imagesResizedLocation);
+                const newImagesResizedLocation = await processingImage(
+                    imagename,
+                    width,
+                    height
+                );
+                res.sendFile(newImagesResizedLocation);
             } catch (error: unknown) {
                 res.status(400);
                 res.send(
