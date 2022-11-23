@@ -61,3 +61,5 @@ app.get('/api/imageresize', async (req, res) => {
         }
     }
 });
+
+export default app;
