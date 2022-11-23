@@ -13,43 +13,23 @@ app.listen(port, () => {
 
 app.use(express.static('assets'));
 
-app.get('/api/imageresize', async (req, res): Promise<void> => {
-    const imagename: string =
-        req.query.imagename == undefined ? '' : req.query.imagename.toString();
-    const width: number =
-        req.query.width == undefined
-            ? 0
-            : isNaN(parseInt(req.query.width.toString()))
-            ? 0
-            : parseInt(req.query.width.toString());
+app.get('/api/imageresize', async (req:express.Request, res:express.Response): Promise<void> => {
+    const imagename: string = req.query.imagename == undefined ? '' : req.query.imagename.toString();
+    const width: number = req.query.width == undefined ? 0 : isNaN(parseInt(req.query.width.toString()))
+            ? 0 : parseInt(req.query.width.toString());
     const height: number =
-        req.query.height == undefined
-            ? 0
-            : isNaN(parseInt(req.query.height.toString()))
-            ? 0
-            : parseInt(req.query.height.toString());
+        req.query.height == undefined ? 0 : isNaN(parseInt(req.query.height.toString()))
+            ? 0 : parseInt(req.query.height.toString());
 
-    const imagesResizedLocation = path.join(
-        __dirname,
-        '../assets/images_resized',
-        `${imagename}_${width}_${height}.jpg`
-    );
-    const IsFileExist = await fspromises
-        .stat(imagesResizedLocation)
-        .catch(() => false);
+    const imagesResizedLocation:string = path.join(__dirname,'../assets/images_resized',`${imagename}_${width}_${height}.jpg`);
+    const IsFileExist = await fspromises.stat(imagesResizedLocation).catch(():boolean => false);
     if (IsFileExist) {
         res.sendFile(imagesResizedLocation);
     } else {
-        const isOriginalFileExist = await fspromises
-            .stat(`assets/images/${imagename}.jpg`)
-            .catch(() => false);
+        const isOriginalFileExist = await fspromises.stat(`assets/images/${imagename}.jpg`).catch(() => false);
         if (isOriginalFileExist) {
             try {
-                const newImagesResizedLocation = await processingImage(
-                    imagename,
-                    width,
-                    height
-                );
+                const newImagesResizedLocation = await processingImage(imagename, width, height);
                 res.sendFile(newImagesResizedLocation);
             } catch (error: unknown) {
                 res.status(400);
