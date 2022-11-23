@@ -8,10 +8,10 @@ Request Method: GET
 Request URL: http://localhost:3000/api/imageresize/?imagename=fjord&width=500&height=900
 
 >used scripts:
-1- npm run lint >> run tslint configuration checks 
-2- npm run prettier >> apply prettier configurations 
-3- npm run build >> complie ts to js
-4- npm run start >> start localhost server 
-5- npm run test >> run unit tests
+    >1- npm run lint >> run tslint configuration checks 
+    >2- npm run prettier >> apply prettier configurations 
+    >3- npm run build >> complie ts to js
+    >4- npm run start >> start localhost server 
+    >5- npm run test >> run unit tests
 
 >result images will be in "assets/images_resized"
